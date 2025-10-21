@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Gestión Docente</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <img src="logo1.png" alt="Logo de la Institución" style="max-width: 120px;">
+        <h1>Portal de Comunicación Interna Docente</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="notifications.html">Notificaciones</a></li>
+                <li><a href="calendar.html">Calendario</a></li>
+                <li><a href="chat.html">Chat</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Dashboard del Profesor</h2>
+            <p>Bienvenido al panel principal. Aquí encontrarás un resumen de toda la información relevante para tu labor docente.</p>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>Horarios de Clases</h3>
+                    <p>Consulta y gestiona tus horarios de clases. Mantente al día con cualquier cambio programado.</p>
+                    <p><strong>Próxima clase:</strong> Matemáticas - 8:00 AM</p>
+                    <p><strong>Clase siguiente:</strong> Física - 10:00 AM</p>
+                    <p><strong>Aula:</strong> Laboratorio 201</p>
+                </div>
+
+                <div class="card">
+                    <h3>Reuniones Pendientes</h3>
+                    <p>Revisa las convocatorias a reuniones departamentales y administrativas.</p>
+                    <p><strong>Próxima reunión:</strong> Junta de profesores - Mañana 10:00 AM</p>
+                    <p><strong>Lugar:</strong> Sala de conferencias</p>
+                    <p><strong>Tema:</strong> Planificación del trimestre</p>
+                </div>
+
+                <div class="card">
+                    <h3>Comunicados Importantes</h3>
+                    <p>Mantente informado sobre anuncios institucionales y cambios en políticas.</p>
+                    <p><strong>Último comunicado:</strong> Actualización del calendario escolar</p>
+                    <p><strong>Fecha:</strong> 10 de octubre, 2025</p>
+                    <p><strong>Importancia:</strong> Alta</p>
+                </div>
+
+                <div class="card">
+                    <h3>Recursos Educativos</h3>
+                    <p>Accede a materiales didácticos, guías y recursos compartidos por el departamento.</p>
+                    <p><strong>Nuevos recursos:</strong> 3 documentos disponibles</p>
+                    <p><strong>Categorías:</strong> Matemáticas, Física, Química</p>
+                    <p><strong>Última actualización:</strong> Hoy</p>
+                </div>
+
+                <div class="card">
+                    <h3>Evaluaciones</h3>
+                    <p>Gestiona calificaciones, exámenes y evaluaciones de estudiantes.</p>
+                    <p><strong>Pendiente:</strong> Revisar exámenes del mes</p>
+                    <p><strong>Próxima evaluación:</strong> Examen parcial - 15 de octubre</p>
+                    <p><strong>Materia:</strong> Matemáticas Avanzadas</p>
+                </div>
+
+                <div class="card">
+                    <h3>Soporte Técnico</h3>
+                    <p>Reporta problemas técnicos o solicita asistencia con herramientas digitales.</p>
+                    <p><strong>Estado:</strong> Servicio operativo</p>
+                    <p><strong>Soporte disponible:</strong> 24/7</p>
+                    <p><strong>Último mantenimiento:</strong> 5 de octubre</p>
+                </div>
+
+                <div class="card">
+                    <h3>Estadísticas del Curso</h3>
+                    <p>Visualiza métricas importantes sobre el rendimiento de tus estudiantes.</p>
+                    <p><strong>Asistencia promedio:</strong> 92%</p>
+                    <p><strong>Calificación promedio:</strong> 8.5/10</p>
+                    <p><strong>Mejores estudiantes:</strong> 15 destacados</p>
+                </div>
+
+                <div class="card">
+                    <h3>Actividades Extracurriculares</h3>
+                    <p>Gestiona y coordina actividades fuera del horario regular de clases.</p>
+                    <p><strong>Próxima actividad:</strong> Olimpiada de Matemáticas</p>
+                    <p><strong>Fecha:</strong> 20 de octubre</p>
+                    <p><strong>Participantes:</strong> 25 estudiantes</p>
+                </div>
+
+                <div class="card">
+                    <h3>Comunicación con Padres</h3>
+                    <p>Mantén contacto efectivo con los padres de tus estudiantes.</p>
+                    <p><strong>Mensajes pendientes:</strong> 3 respuestas</p>
+                    <p><strong>Última reunión:</strong> 8 de octubre</p>
+                    <p><strong>Próxima cita:</strong> 22 de octubre</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Si experimenta problemas de acceso, contacte a la oficina de soporte técnico.</p>
+        <nav>
+            <a href="#">Política de Privacidad</a> | <a href="#">Manual del Usuario</a>
+        </nav>
+        <p>&copy; 2025 [Nombre de la Institución/Plataforma]</p>
+    </footer>
+
+    <!-- Emergency Button -->
+    <button class="emergency-button" onclick="showEmergencyModal()" title="Emergencia - Llamar al 911">🚨</button>
+
+    <div class="emergency-modal" id="emergencyModal">
+        <div class="emergency-content">
+            <h2>🚨 EMERGENCIA</h2>
+            <p>¿Está seguro que desea llamar al servicio de emergencias 911?</p>
+            <div class="emergency-buttons">
+                <button class="emergency-call" onclick="callEmergency()">Llamar 911</button>
+                <button class="emergency-cancel" onclick="hideEmergencyModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Emergency functions
+        function showEmergencyModal() {
+            document.getElementById('emergencyModal').classList.add('show');
+        }
+
+        function hideEmergencyModal() {
+            document.getElementById('emergencyModal').classList.remove('show');
+        }
+
+        function callEmergency() {
+            if (confirm('¿Desea llamar al 911? Esto abrirá su aplicación de teléfono.')) {
+                window.location.href = 'tel:911';
+            }
+            hideEmergencyModal();
+        }
+    </script>
+
+</body>
+</html>

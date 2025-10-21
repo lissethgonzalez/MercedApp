@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificaciones - Sistema de Gestión Docente</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <img src="logo1.png" alt="Logo de la Institución" style="max-width: 120px;">
+        <h1>Portal de Comunicación Interna Docente</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="notifications.html">Notificaciones</a></li>
+                <li><a href="calendar.html">Calendario</a></li>
+                <li><a href="chat.html">Chat</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Centro de Notificaciones</h2>
+            <p>Mantente al día con todas las comunicaciones importantes, anuncios y actualizaciones del sistema educativo.</p>
+
+            <div style="margin-bottom: 2rem;">
+                <button style="background-color: var(--secondary-color); color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">Marcar todas como leídas</button>
+            </div>
+
+            <ul class="notification-list">
+                <li class="notification-item unread">
+                    <h3>Cambio de Horario - Matemáticas</h3>
+                    <p>La clase de Matemáticas del jueves 15 de octubre se ha movido de 8:00 AM a 9:00 AM debido a mantenimiento del aula.</p>
+                    <small>Recibido: Hace 2 horas</small>
+                </li>
+
+                <li class="notification-item unread">
+                    <h3>Cancelación de Clase - Historia</h3>
+                    <p>La clase de Historia programada para mañana ha sido cancelada debido a enfermedad del profesor. Se reprogramará para la próxima semana.</p>
+                    <small>Recibido: Hace 4 horas</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Reunión Departamental Obligatoria</h3>
+                    <p>Convocatoria a reunión departamental el próximo lunes 19 de octubre a las 3:00 PM en el salón de profesores.</p>
+                    <small>Recibido: Hace 1 día</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Actualización del Sistema</h3>
+                    <p>El sistema estará en mantenimiento programado este sábado de 2:00 AM a 4:00 AM. No habrá acceso durante ese período.</p>
+                    <small>Recibido: Hace 2 días</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Nuevos Recursos Didácticos</h3>
+                    <p>Se han publicado nuevos materiales para la enseñanza de Física en la sección de recursos. Incluye guías prácticas y videos tutoriales.</p>
+                    <small>Recibido: Hace 3 días</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Recordatorio: Evaluación Docente</h3>
+                    <p>La evaluación docente del segundo trimestre comenzará la próxima semana. Recuerda completar tu autoevaluación antes del 25 de octubre.</p>
+                    <small>Recibido: Hace 4 días</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Cambio en Política de Asistencia</h3>
+                    <p>A partir del próximo mes, se implementará un nuevo sistema de registro de asistencia digital. Capacitación disponible en línea.</p>
+                    <small>Recibido: Hace 5 días</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Convocatoria: Taller de Capacitación</h3>
+                    <p>Se convoca a todos los profesores de Matemáticas a un taller sobre nuevas metodologías de enseñanza. Fecha: 25 de octubre, 9:00 AM.</p>
+                    <small>Recibido: Hace 6 días</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Evento: Día del Maestro</h3>
+                    <p>El próximo 15 de octubre celebraremos el Día del Maestro con un evento especial. Confirmación de asistencia requerida.</p>
+                    <small>Recibido: Hace 1 semana</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Actualización de Contactos</h3>
+                    <p>Se ha actualizado el directorio de contactos del personal administrativo. Descarga la versión más reciente desde el portal.</p>
+                    <small>Recibido: Hace 1 semana</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Alerta de Seguridad</h3>
+                    <p>Recordatorio: Mantenga sus contraseñas seguras y no comparta información sensible por email no cifrado.</p>
+                    <small>Recibido: Hace 1 semana</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Encuesta de Satisfacción</h3>
+                    <p>Participa en nuestra encuesta anual sobre la satisfacción docente. Tu opinión es importante para mejorar nuestros servicios.</p>
+                    <small>Recibido: Hace 2 semanas</small>
+                </li>
+
+                <li class="notification-item">
+                    <h3>Actualización del Plan de Estudios</h3>
+                    <p>Se han realizado modificaciones menores al plan de estudios de secundaria. Consulta los detalles en la sección de documentos.</p>
+                    <small>Recibido: Hace 2 semanas</small>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>Si experimenta problemas de acceso, contacte a la oficina de soporte técnico.</p>
+        <nav>
+            <a href="#">Política de Privacidad</a> | <a href="#">Manual del Usuario</a>
+        </nav>
+        <p>&copy; 2025 [Nombre de la Institución/Plataforma]</p>
+    </footer>
+
+    <!-- Emergency Button -->
+    <button class="emergency-button" onclick="showEmergencyModal()" title="Emergencia - Llamar al 911">🚨</button>
+
+    <div class="emergency-modal" id="emergencyModal">
+        <div class="emergency-content">
+            <h2>🚨 EMERGENCIA</h2>
+            <p>¿Está seguro que desea llamar al servicio de emergencias 911?</p>
+            <div class="emergency-buttons">
+                <button class="emergency-call" onclick="callEmergency()">Llamar 911</button>
+                <button class="emergency-cancel" onclick="hideEmergencyModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Emergency functions
+        function showEmergencyModal() {
+            document.getElementById('emergencyModal').classList.add('show');
+        }
+
+        function hideEmergencyModal() {
+            document.getElementById('emergencyModal').classList.remove('show');
+        }
+
+        function callEmergency() {
+            if (confirm('¿Desea llamar al 911? Esto abrirá su aplicación de teléfono.')) {
+                window.location.href = 'tel:911';
+            }
+            hideEmergencyModal();
+        }
+    </script>
+
+</body>
+</html>

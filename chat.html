@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interno - Sistema de Gestión Docente</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <img src="logo1.png" alt="Logo de la Institución" style="max-width: 120px;">
+        <h1>Portal de Comunicación Interna Docente</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="notifications.html">Notificaciones</a></li>
+                <li><a href="calendar.html">Calendario</a></li>
+                <li><a href="chat.html">Chat</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Chat Interno de Profesores</h2>
+            <p>Comunícate en tiempo real con tus colegas. Mantén conversaciones privadas o participa en canales temáticos.</p>
+
+            <div class="chat-container">
+                <div class="chat-sidebar">
+                    <h3>Canales</h3>
+                    <ul class="channel-list">
+                        <li class="channel active" onclick="selectChannel('general')">💬 General</li>
+                        <li class="channel" onclick="selectChannel('matematicas')">📐 Matemáticas</li>
+                        <li class="channel" onclick="selectChannel('ciencias')">🧪 Ciencias</li>
+                        <li class="channel" onclick="selectChannel('idiomas')">📚 Idiomas</li>
+                        <li class="channel" onclick="selectChannel('administrativo')">📋 Administrativo</li>
+                    </ul>
+
+                    <h3>Contactos Directos</h3>
+                    <ul class="contact-list" id="contactList">
+                        <!-- Contacts will be loaded dynamically -->
+                    </ul>
+                </div>
+
+                <div class="chat-main">
+                    <div class="chat-header">
+                        <h3 id="chatTitle">💬 General</h3>
+                        <span id="onlineCount">4 profesores en línea</span>
+                    </div>
+
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message">
+                            <div class="message-avatar">MG</div>
+                            <div class="message-content">
+                                <div class="message-author">María González</div>
+                                <div class="message-text">Buenos días a todos. ¿Alguien sabe si mañana hay reunión de departamento?</div>
+                                <div class="message-time">10:30 AM</div>
+                            </div>
+                        </div>
+
+                        <div class="message">
+                            <div class="message-avatar">CR</div>
+                            <div class="message-content">
+                                <div class="message-author">Carlos Rodríguez</div>
+                                <div class="message-text">Hola María. Según el calendario, sí hay reunión a las 3:00 PM en la sala de profesores.</div>
+                                <div class="message-time">10:32 AM</div>
+                            </div>
+                        </div>
+
+                        <div class="message">
+                            <div class="message-avatar">AL</div>
+                            <div class="message-content">
+                                <div class="message-author">Ana López</div>
+                                <div class="message-text">Gracias por la información Carlos. ¿El orden del día ya está disponible?</div>
+                                <div class="message-time">10:35 AM</div>
+                            </div>
+                        </div>
+
+                        <div class="message own-message">
+                            <div class="message-content">
+                                <div class="message-text">Hola compañeros. Yo tampoco lo he visto aún. ¿Alguien del departamento administrativo puede compartirlo?</div>
+                                <div class="message-time">10:37 AM</div>
+                            </div>
+                            <div class="message-avatar">Tú</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input">
+                        <input type="text" id="messageInput" placeholder="Escribe tu mensaje..." onkeypress="handleKeyPress(event)">
+                        <button onclick="sendMessage()" style="background-color: var(--secondary-color); color: white; border: none; padding: 0.75rem 1rem; border-radius: 4px; cursor: pointer;">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Si experimenta problemas de acceso, contacte a la oficina de soporte técnico.</p>
+        <nav>
+            <a href="#">Política de Privacidad</a> | <a href="#">Manual del Usuario</a>
+        </nav>
+        <p>&copy; 2025 [Nombre de la Institución/Plataforma]</p>
+    </footer>
+
+    <!-- Emergency Button -->
+    <button class="emergency-button" onclick="showEmergencyModal()" title="Emergencia - Llamar al 911">🚨</button>
+
+    <div class="emergency-modal" id="emergencyModal">
+        <div class="emergency-content">
+            <h2>🚨 EMERGENCIA</h2>
+            <p>¿Está seguro que desea llamar al servicio de emergencias 911?</p>
+            <div class="emergency-buttons">
+                <button class="emergency-call" onclick="callEmergency()">Llamar 911</button>
+                <button class="emergency-cancel" onclick="hideEmergencyModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentChannel = 'general';
+        let currentContact = null;
+        let chatMessages = {};
+        let messageIntervals = {};
+
+        function selectChannel(channelName) {
+            currentChannel = channelName;
+            currentContact = null;
+
+            // Update UI
+            document.querySelectorAll('.channel').forEach(ch => ch.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.contact').forEach(ct => ct.classList.remove('active'));
+
+            updateChatHeader(channelName);
+            loadChannelMessages(channelName);
+        }
+
+        function selectContact(contactName) {
+            currentContact = contactName;
+            currentChannel = null;
+
+            // Update UI
+            document.querySelectorAll('.contact').forEach(ct => ct.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.channel').forEach(ch => ch.classList.remove('active'));
+
+            updateChatHeader(contactName);
+            loadDirectMessages(contactName);
+        }
+
+        function updateChatHeader(title) {
+            document.getElementById('chatTitle').textContent = title;
+        }
+
+        function loadChannelMessages(channel) {
+            const messages = document.getElementById('chatMessages');
+            // In a real app, this would load messages from server
+            messages.innerHTML = `
+                <div class="message">
+                    <div class="message-avatar">MG</div>
+                    <div class="message-content">
+                        <div class="message-author">María González</div>
+                        <div class="message-text">Bienvenidos al canal de ${channel}!</div>
+                        <div class="message-time">Ahora</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadDirectMessages(contact) {
+            const messages = document.getElementById('chatMessages');
+            messages.innerHTML = `
+                <div class="message">
+                    <div class="message-avatar">${contact.split(' ')[0][0]}${contact.split(' ')[1][0]}</div>
+                    <div class="message-content">
+                        <div class="message-author">${contact}</div>
+                        <div class="message-text">Chat privado iniciado con ${contact}</div>
+                        <div class="message-time">Ahora</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const messageText = input.value.trim();
+
+            if (messageText) {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { nombre: 'Usuario Anónimo' };
+                const channelKey = currentChannel || `dm_${currentContact}`;
+
+                // Initialize channel messages if not exists
+                if (!chatMessages[channelKey]) {
+                    chatMessages[channelKey] = [];
+                }
+
+                const message = {
+                    id: Date.now(),
+                    text: messageText,
+                    sender: currentUser.nombre,
+                    timestamp: new Date().toISOString(),
+                    type: 'user'
+                };
+
+                // Add message to local storage
+                chatMessages[channelKey].push(message);
+                saveMessagesToStorage();
+
+                // Display message
+                displayMessage(message, true);
+
+                // Simulate response after random delay (simulating real-time)
+                if (currentChannel) {
+                    setTimeout(() => {
+                        simulateBotResponse(channelKey);
+                    }, Math.random() * 3000 + 1000);
+                }
+
+                input.value = '';
+            }
+        }
+
+        function displayMessage(message, isOwn = false) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isOwn ? 'own-message' : ''}`;
+
+            const timeString = new Date(message.timestamp).toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            if (isOwn) {
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <div class="message-text">${message.text}</div>
+                        <div class="message-time">${timeString}</div>
+                    </div>
+                    <div class="message-avatar">Tú</div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">${message.sender.split(' ')[0][0]}${message.sender.split(' ')[1] ? message.sender.split(' ')[1][0] : ''}</div>
+                    <div class="message-content">
+                        <div class="message-author">${message.sender}</div>
+                        <div class="message-text">${message.text}</div>
+                        <div class="message-time">${timeString}</div>
+                    </div>
+                `;
+            }
+
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function simulateBotResponse(channelKey) {
+            const responses = {
+                general: [
+                    "¡Gracias por tu mensaje! ¿En qué más puedo ayudarte?",
+                    "Entendido. ¿Alguien más tiene alguna pregunta?",
+                    "Excelente punto. ¿Alguna otra opinión al respecto?",
+                    "Gracias por compartir esa información.",
+                    "Perfecto, tomaré nota de eso."
+                ],
+                matematicas: [
+                    "Interesante pregunta sobre matemáticas. ¿Puedes dar más detalles?",
+                    "En matemáticas siempre hay múltiples enfoques. ¿Cuál prefieres?",
+                    "Las ecuaciones pueden ser desafiantes, pero con práctica se dominan.",
+                    "¿Has revisado los ejercicios del libro de texto?",
+                    "La geometría es fascinante. ¿Qué teorema estás estudiando?"
+                ],
+                ciencias: [
+                    "La ciencia es experimental. ¿Qué hipótesis tienes?",
+                    "¿Has considerado hacer un experimento para probar eso?",
+                    "Las leyes físicas son universales. ¿Qué fenómeno observas?",
+                    "La biología es increíble. ¿Qué organismo te interesa?",
+                    "La química explica cómo funciona el mundo molecular."
+                ],
+                idiomas: [
+                    "Los idiomas abren puertas. ¿Qué idioma estás aprendiendo?",
+                    "La práctica constante es clave para aprender idiomas.",
+                    "¿Has intentado conversar con hablantes nativos?",
+                    "La gramática es importante, pero la comunicación lo es más.",
+                    "¡Qué interesante! ¿Qué literatura te gusta en ese idioma?"
+                ],
+                administrativo: [
+                    "Para asuntos administrativos, contacta a la oficina correspondiente.",
+                    "Los trámites requieren documentación específica.",
+                    "La coordinación administrativa es fundamental.",
+                    "¿Has revisado el calendario de actividades?",
+                    "Los procedimientos están diseñados para ser eficientes."
+                ]
+            };
+
+            const channelResponses = responses[channelKey] || responses.general;
+            const randomResponse = channelResponses[Math.floor(Math.random() * channelResponses.length)];
+
+            const botMessage = {
+                id: Date.now(),
+                text: randomResponse,
+                sender: 'Sistema Docente',
+                timestamp: new Date().toISOString(),
+                type: 'bot'
+            };
+
+            chatMessages[channelKey].push(botMessage);
+            saveMessagesToStorage();
+            displayMessage(botMessage, false);
+        }
+
+        function saveMessagesToStorage() {
+            localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
+        }
+
+        function loadMessagesFromStorage() {
+            const stored = localStorage.getItem('chatMessages');
+            if (stored) {
+                chatMessages = JSON.parse(stored);
+            }
+        }
+
+        function loadChannelMessages(channel) {
+            const messages = document.getElementById('chatMessages');
+            messages.innerHTML = '';
+
+            const channelKey = channel || `dm_${currentContact}`;
+            const channelMessages = chatMessages[channelKey] || [];
+
+            // Display existing messages
+            channelMessages.forEach(message => {
+                displayMessage(message, message.sender === (JSON.parse(localStorage.getItem('currentUser')) || {}).nombre);
+            });
+
+            // If no messages, show welcome message
+            if (channelMessages.length === 0) {
+                const welcomeMessage = {
+                    id: Date.now(),
+                    text: `Bienvenido al ${channel ? 'canal' : 'chat'} ${channel || currentContact}!`,
+                    sender: 'Sistema',
+                    timestamp: new Date().toISOString(),
+                    type: 'system'
+                };
+                displayMessage(welcomeMessage, false);
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Load contacts from registered teachers
+        function loadContacts() {
+            const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            const contactList = document.getElementById('contactList');
+
+            // Clear existing contacts
+            contactList.innerHTML = '';
+
+            // Admin contacts can be added here if needed
+
+            // Add registered teachers
+            teachers.forEach(teacher => {
+                if (teacher.activo) {
+                    const contactItem = document.createElement('li');
+                    contactItem.className = 'contact';
+                    contactItem.onclick = () => selectContact(teacher.nombre);
+                    contactItem.innerHTML = `👩‍🏫 ${teacher.nombre}`;
+                    contactList.appendChild(contactItem);
+                }
+            });
+
+            // Add some default contacts if no teachers registered
+            if (teachers.length === 0) {
+                const defaultContacts = [
+                    { name: 'María González', emoji: '👩‍🏫' },
+                    { name: 'Carlos Rodríguez', emoji: '👨‍🏫' },
+                    { name: 'Ana López', emoji: '👩‍🏫' }
+                ];
+
+                defaultContacts.forEach(contact => {
+                    const contactItem = document.createElement('li');
+                    contactItem.className = 'contact';
+                    contactItem.onclick = () => selectContact(contact.name);
+                    contactItem.innerHTML = `${contact.emoji} ${contact.name}`;
+                    contactList.appendChild(contactItem);
+                });
+            }
+        }
+
+        // Emergency functions
+        function showEmergencyModal() {
+            document.getElementById('emergencyModal').classList.add('show');
+        }
+
+        function hideEmergencyModal() {
+            document.getElementById('emergencyModal').classList.remove('show');
+        }
+
+        function callEmergency() {
+            if (confirm('¿Desea llamar al 911? Esto abrirá su aplicación de teléfono.')) {
+                window.location.href = 'tel:911';
+            }
+            hideEmergencyModal();
+        }
+
+        // Initialize contacts on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadContacts();
+            loadMessagesFromStorage();
+            loadChannelMessages(currentChannel);
+        });
+    </script>
+
+</body>
+</html>

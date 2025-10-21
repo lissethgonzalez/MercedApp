@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario - Sistema de Gestión Docente</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="initializeCalendar()">
+<body>
+
+    <header>
+        <img src="logo1.png" alt="Logo de la Institución" style="max-width: 120px;">
+        <h1>Portal de Comunicación Interna Docente</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="notifications.html">Notificaciones</a></li>
+                <li><a href="calendar.html">Calendario</a></li>
+                <li><a href="chat.html">Chat</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Calendario Académico</h2>
+            <p>Visualiza eventos importantes, fechas límite, reuniones y actividades programadas para el período académico.</p>
+
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button onclick="previousMonth()" style="background-color: var(--secondary-color); color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">< Anterior</button>
+                    <h3 id="currentMonthYear">Octubre 2025</h3>
+                    <button onclick="nextMonth()" style="background-color: var(--secondary-color); color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">Siguiente ></button>
+                </div>
+
+                <div style="margin-bottom: 2rem; padding: 1rem; background-color: var(--light-bg); border-radius: 8px; border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 1rem; color: var(--primary-color);">Agregar Nuevo Evento</h4>
+                    <form id="eventForm" style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: end;">
+                        <div>
+                            <label for="eventDate" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Fecha:</label>
+                            <input type="date" id="eventDate" required style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;">
+                        </div>
+                        <div>
+                            <label for="eventTitle" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Título del Evento:</label>
+                            <input type="text" id="eventTitle" placeholder="Ej: Reunión de profesores" required style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px; min-width: 200px;">
+                        </div>
+                        <button type="submit" style="background-color: var(--accent-color); color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">Agregar Evento</button>
+                    </form>
+                </div>
+
+                <div class="calendar-grid" id="calendarGrid">
+                    <div class="day-header">Dom</div>
+                    <div class="day-header">Lun</div>
+                    <div class="day-header">Mar</div>
+                    <div class="day-header">Mié</div>
+                    <div class="day-header">Jue</div>
+                    <div class="day-header">Vie</div>
+                    <div class="day-header">Sáb</div>
+                    <!-- Calendar days will be generated dynamically -->
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3>Próximos Eventos</h3>
+                <ul class="notification-list" style="margin-top: 1rem;">
+                    <li class="notification-item">
+                        <h4>Inicio de Clases - 1 de octubre</h4>
+                        <p>Comienzo del período académico 2025</p>
+                    </li>
+                    <li class="notification-item">
+                        <h4>Reunión con Padres - 7 de octubre</h4>
+                        <p>Reunión general de padres de familia - Salón principal</p>
+                    </li>
+                    <li class="notification-item">
+                        <h4>Exámenes Parciales - 10 de octubre</h4>
+                        <p>Evaluaciones del primer parcial del trimestre</p>
+                    </li>
+                    <li class="notification-item">
+                        <h4>Día del Maestro - 16 de octubre</h4>
+                        <p>Celebración especial por el Día del Maestro</p>
+                    </li>
+                    <li class="notification-item">
+                        <h4>Fin del Trimestre - 31 de octubre</h4>
+                        <p>Cierre del primer trimestre académico</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Si experimenta problemas de acceso, contacte a la oficina de soporte técnico.</p>
+        <nav>
+            <a href="#">Política de Privacidad</a> | <a href="#">Manual del Usuario</a>
+        </nav>
+        <p>&copy; 2025 [Nombre de la Institución/Plataforma]</p>
+    </footer>
+
+    <!-- Emergency Button -->
+    <button class="emergency-button" onclick="showEmergencyModal()" title="Emergencia - Llamar al 911">🚨</button>
+
+    <div class="emergency-modal" id="emergencyModal">
+        <div class="emergency-content">
+            <h2>🚨 EMERGENCIA</h2>
+            <p>¿Está seguro que desea llamar al servicio de emergencias 911?</p>
+            <div class="emergency-buttons">
+                <button class="emergency-call" onclick="callEmergency()">Llamar 911</button>
+                <button class="emergency-cancel" onclick="hideEmergencyModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDate = new Date();
+
+        // Sample events data - in a real application, this would come from a database
+        const events = {
+            "2025-10-1": "Inicio clases",
+            "2025-10-7": "Reunión padres",
+            "2025-10-10": "Exámenes parciales",
+            "2025-10-14": "Junta profesores",
+            "2025-10-16": "Día del Maestro",
+            "2025-10-22": "Evaluación docente",
+            "2025-10-28": "Consejo académico",
+            "2025-10-31": "Fin trimestre",
+            "2025-11-5": "Taller capacitación",
+            "2025-11-15": "Exámenes finales",
+            "2025-12-1": "Navidad",
+            "2025-12-20": "Último día clases"
+        };
+
+        function initializeCalendar() {
+            renderCalendar(currentDate);
+        }
+
+        function renderCalendar(date) {
+            const year = date.getFullYear();
+            const month = date.getMonth();
+
+            // Update month/year header
+            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                              'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            document.getElementById('currentMonthYear').textContent = `${monthNames[month]} ${year}`;
+
+            // Clear existing calendar
+            const calendarGrid = document.getElementById('calendarGrid');
+            // Remove all day elements except headers
+            const dayElements = calendarGrid.querySelectorAll('.day');
+            dayElements.forEach(day => day.remove());
+
+            // Get first day of month and last day
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+            // Generate calendar days
+            let currentDay = new Date(startDate);
+
+            for (let i = 0; i < 42; i++) { // 6 weeks * 7 days
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'day';
+
+                const dayNumber = currentDay.getDate();
+                const isCurrentMonth = currentDay.getMonth() === month;
+
+                if (isCurrentMonth) {
+                    dayDiv.textContent = dayNumber;
+
+                    // Check if it's today
+                    const today = new Date();
+                    if (currentDay.toDateString() === today.toDateString()) {
+                        dayDiv.classList.add('today');
+                    }
+
+                    // Check if there's an event
+                    const eventKey = `${year}-${month + 1}-${dayNumber}`;
+                    if (events[eventKey]) {
+                        dayDiv.classList.add('has-event');
+                        dayDiv.innerHTML = `<div class="day-number">${dayNumber}</div><div class="event-title">${events[eventKey]}</div>`;
+                    } else {
+                        dayDiv.innerHTML = `<div class="day-number">${dayNumber}</div>`;
+                    }
+                } else {
+                    dayDiv.textContent = dayNumber;
+                    dayDiv.style.opacity = '0.5';
+                }
+
+                calendarGrid.appendChild(dayDiv);
+                currentDay.setDate(currentDay.getDate() + 1);
+            }
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar(currentDate);
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar(currentDate);
+        }
+
+        // Event form handling
+        document.getElementById('eventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const eventDate = document.getElementById('eventDate').value;
+            const eventTitle = document.getElementById('eventTitle').value;
+
+            if (eventDate && eventTitle) {
+                // Add event to the events object
+                events[eventDate] = eventTitle;
+
+                // Clear form
+                document.getElementById('eventDate').value = '';
+                document.getElementById('eventTitle').value = '';
+
+                // Re-render calendar to show new event
+                renderCalendar(currentDate);
+
+                // Show success message
+                alert('Evento agregado exitosamente: ' + eventTitle);
+            }
+        });
+
+        // Emergency functions
+        function showEmergencyModal() {
+            document.getElementById('emergencyModal').classList.add('show');
+        }
+
+        function hideEmergencyModal() {
+            document.getElementById('emergencyModal').classList.remove('show');
+        }
+
+        function callEmergency() {
+            if (confirm('¿Desea llamar al 911? Esto abrirá su aplicación de teléfono.')) {
+                window.location.href = 'tel:911';
+            }
+            hideEmergencyModal();
+        }
+    </script>
+
+</body>
+</html>
