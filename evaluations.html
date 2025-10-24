@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluaciones - AppRod</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="logo1.png" alt="Logo de la Institución">
+        <h1>MercedAPP</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="notifications.html">Notificaciones</a></li>
+                <li><a href="calendar.html">Calendario</a></li>
+                <li><a href="chat.html">Chat</a></li>
+                <li><a href="evaluations.html">Evaluaciones</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="evaluations-section">
+            <h2>Organización de Evaluaciones</h2>
+            <p>Gestiona y organiza las evaluaciones de tus estudiantes de manera eficiente.</p>
+
+            <div class="evaluations-grid">
+                <div class="evaluation-card">
+                    <h3>Evaluaciones Pendientes</h3>
+                    <div class="evaluation-count">
+                        <span class="count-number" id="pending-count">0</span>
+                        <span class="count-label">evaluaciones</span>
+                    </div>
+                    <button class="btn-add" onclick="addEvaluation('pending')">Agregar Evaluación</button>
+                    <ul class="evaluation-list" id="pending-list"></ul>
+                </div>
+
+                <div class="evaluation-card">
+                    <h3>Evaluaciones en Revisión</h3>
+                    <div class="evaluation-count">
+                        <span class="count-number" id="reviewing-count">0</span>
+                        <span class="count-label">evaluaciones</span>
+                    </div>
+                    <button class="btn-add" onclick="addEvaluation('reviewing')">Agregar Evaluación</button>
+                    <ul class="evaluation-list" id="reviewing-list"></ul>
+                </div>
+
+                <div class="evaluation-card">
+                    <h3>Evaluaciones Completadas</h3>
+                    <div class="evaluation-count">
+                        <span class="count-number" id="completed-count">0</span>
+                        <span class="count-label">evaluaciones</span>
+                    </div>
+                    <button class="btn-add" onclick="addEvaluation('completed')">Agregar Evaluación</button>
+                    <ul class="evaluation-list" id="completed-list"></ul>
+                </div>
+            </div>
+
+            <div class="schedule-section">
+                <h3>Programar Evaluaciones</h3>
+                <form id="schedule-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eval-name">Nombre de la Evaluación:</label>
+                            <input type="text" id="eval-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eval-date">Fecha de Entrega:</label>
+                            <input type="date" id="eval-date" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eval-subject">Materia:</label>
+                            <input type="text" id="eval-subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eval-class">Clase:</label>
+                            <input type="text" id="eval-class" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Programar Evaluación</button>
+                </form>
+
+                <div class="scheduled-evaluations">
+                    <h4>Evaluaciones Programadas</h4>
+                    <ul id="scheduled-list"></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AppRod. Todos los derechos reservados.</p>
+        <nav>
+            <a href="#">Política de Privacidad</a>
+            <a href="#">Términos de Servicio</a>
+            <a href="#">Contacto</a>
+        </nav>
+    </footer>
+
+    <button class="emergency-button" onclick="showEmergencyModal()">🚨</button>
+
+    <div class="emergency-modal" id="emergency-modal">
+        <div class="emergency-content">
+            <h2>¿Necesitas Ayuda?</h2>
+            <p>Si tienes una emergencia, llama inmediatamente al número de emergencias local.</p>
+            <div class="emergency-buttons">
+                <button class="emergency-call" onclick="callEmergency()">Llamar Emergencia</button>
+                <button class="emergency-cancel" onclick="hideEmergencyModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="evaluations.js"></script>
+</body>
+</html>
