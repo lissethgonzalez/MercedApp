@@ -1,17 +1,17 @@
 /* Professional educational platform color scheme */
 /* Primary colors inspired by educational institutions - blues and greens */
 :root {
-    --primary-color: #2c3e50; /* Dark blue for headers */
-    --secondary-color: #3498db; /* Bright blue for accents */
-    --accent-color: #27ae60; /* Green for success elements */
-    --background-color: #ecf0f1; /* Light gray background */
-    --text-color: #34495e; /* Dark gray text */
-    --light-bg: #ffffff; /* White for cards */
-    --border-color: #bdc3c7; /* Light border */
-    --hover-color: #2980b9; /* Darker blue for hover */
-    --success-color: #27ae60; /* Green for success */
-    --warning-color: #f39c12; /* Orange for warnings */
-    --error-color: #e74c3c; /* Red for errors */
+    --primary-color: #00008B; /* Dark blue for headers */
+    --secondary-color: #4169E1; /* Royal blue for accents */
+    --accent-color: #F5F5DC; /* Beige for success elements */
+    --background-color: #F5F5DC; /* Beige background */
+    --text-color: #00008B; /* Dark blue text */
+    --light-bg: #FFFFFF; /* White for cards */
+    --border-color: #F5DEB3; /* Wheat/beige border */
+    --hover-color: #0000CD; /* Medium blue for hover */
+    --success-color: #F5F5DC; /* Beige for success */
+    --warning-color: #4682B4; /* Steel blue for warnings */
+    --error-color: #0000FF; /* Blue for errors */
 }
 
 /* Global styles */
@@ -25,30 +25,64 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: var(--background-color);
+    background: var(--background-color);
     min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(245, 245, 220, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
 }
 
 header {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    pointer-events: none;
 }
 
 header img {
-    height: 60px;
-    margin-right: 1rem;
+    height: 400px;
+    width: 400px;
+    margin-bottom: 0.5rem;
 }
 
 header h1 {
-    font-size: 1.8rem;
-    margin: 0;
-    flex-grow: 1;
+    font-size: 2rem;
+    margin: -0.5rem 0 1rem 0;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 nav ul {
@@ -56,19 +90,23 @@ nav ul {
     display: flex;
     gap: 2rem;
     margin: 0;
+    justify-content: center;
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.875rem 1.75rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
 nav a:hover {
     background-color: var(--hover-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 main {
@@ -78,28 +116,69 @@ main {
 }
 
 section {
-    background-color: var(--light-bg);
-    padding: 2rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+    backdrop-filter: blur(10px);
+    padding: 3rem;
     margin-bottom: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2), 0 0 20px rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+}
+
+section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.2);
 }
 
 .introduccion h2 {
     color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+}
+
+.introduccion h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    border-radius: 2px;
 }
 
 .introduccion p {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--text-color);
+    line-height: 1.7;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .login-form h3 {
     color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
 }
 
 form {
@@ -117,34 +196,63 @@ label {
 input[type="text"],
 input[type="password"] {
     width: 100%;
-    padding: 0.75rem;
+    padding: 1rem;
     border: 2px solid var(--border-color);
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1rem;
-    margin-bottom: 1rem;
-    transition: border-color 0.3s ease;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    background-color: var(--background-color);
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
     outline: none;
     border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    background-color: white;
+    transform: translateY(-1px);
 }
 
 button[type="submit"] {
-    background-color: var(--secondary-color);
+    background: linear-gradient(135deg, var(--secondary-color), var(--hover-color));
     color: white;
-    padding: 0.75rem 2rem;
+    padding: 0.875rem 2rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
     width: 100%;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+button[type="submit"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.4s ease;
 }
 
 button[type="submit"]:hover {
-    background-color: var(--hover-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.35);
+}
+
+button[type="submit"]:hover::before {
+    left: 100%;
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(52, 152, 219, 0.25);
 }
 
 .olvido-contrasena {
@@ -177,10 +285,15 @@ footer a {
     color: white;
     text-decoration: none;
     margin: 0 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 footer a:hover {
-    text-decoration: underline;
+    background-color: rgba(255,255,255,0.1);
+    text-decoration: none;
+    transform: translateY(-1px);
 }
 
 /* Responsive design */
@@ -255,7 +368,7 @@ footer a:hover {
 
 .notification-item.unread {
     border-left-color: var(--warning-color);
-    background-color: #fff3cd;
+    background-color: var(--background-color);
 }
 
 /* Calendar styles */
@@ -315,6 +428,203 @@ footer a:hover {
     background-color: var(--warning-color);
     color: white;
     position: relative;
+}
+
+/* Evaluations styles */
+.evaluations-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+}
+
+.evaluations-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    border-radius: 2px;
+}
+
+.evaluations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.evaluation-card {
+    background-color: var(--light-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-left: 5px solid var(--secondary-color);
+    transition: all 0.3s ease;
+}
+
+.evaluation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.evaluation-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.evaluation-count {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.count-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    display: block;
+}
+
+.count-label {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-top: 0.5rem;
+}
+
+.btn-add {
+    background: linear-gradient(135deg, var(--secondary-color), var(--hover-color));
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.btn-add:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.evaluation-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.evaluation-item {
+    background-color: var(--background-color);
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--secondary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.evaluation-name {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.evaluation-date {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.btn-remove {
+    background-color: var(--error-color);
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-remove:hover {
+    background-color: var(--hover-color);
+}
+
+.schedule-section {
+    background-color: var(--light-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-top: 2rem;
+}
+
+.schedule-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.schedule-section form {
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 0.875rem 2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.btn-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.scheduled-evaluations h4 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.scheduled-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.scheduled-item {
+    background-color: var(--background-color);
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--accent-color);
+}
+
+.scheduled-info {
+    margin-bottom: 0.5rem;
+}
+
+.scheduled-info strong {
+    color: var(--primary-color);
 }
 
 /* Chat styles */
@@ -437,7 +747,7 @@ footer a:hover {
 
 .message-time {
     font-size: 0.8rem;
-    color: #666;
+    color: var(--text-color);
 }
 
 .own-message {
@@ -481,7 +791,10 @@ footer a:hover {
 
 .registration-form h3 {
     color: var(--primary-color);
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
 }
 
 .registration-form > p {
@@ -513,32 +826,61 @@ footer a:hover {
 .form-group input,
 .form-group select {
     width: 100%;
-    padding: 0.75rem;
+    padding: 1rem;
     border: 2px solid var(--border-color);
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    background-color: var(--background-color);
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
     border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    background-color: white;
+    transform: translateY(-1px);
 }
 
 .registration-form button[type="submit"] {
-    background-color: var(--accent-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 0.75rem 2rem;
+    padding: 0.875rem 2rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(139, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.registration-form button[type="submit"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(245,245,220,0.2), transparent);
+    transition: left 0.4s ease;
 }
 
 .registration-form button[type="submit"]:hover {
-    background-color: #27ae60;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.35);
+}
+
+.registration-form button[type="submit"]:hover::before {
+    left: 100%;
+}
+
+.registration-form button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(139, 0, 0, 0.25);
 }
 
 /* Emergency button styles */
@@ -546,7 +888,7 @@ footer a:hover {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #e74c3c;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 50%;
@@ -564,7 +906,7 @@ footer a:hover {
 }
 
 .emergency-button:hover {
-    background-color: #c0392b;
+    background-color: var(--secondary-color);
     transform: scale(1.1);
     box-shadow: 0 6px 12px rgba(0,0,0,0.4);
 }
@@ -597,13 +939,13 @@ footer a:hover {
 }
 
 .emergency-content h2 {
-    color: #e74c3c;
+    color: var(--primary-color);
     margin-bottom: 1rem;
 }
 
 .emergency-content p {
     margin-bottom: 2rem;
-    color: #333;
+    color: var(--text-color);
 }
 
 .emergency-buttons {
@@ -622,21 +964,21 @@ footer a:hover {
 }
 
 .emergency-call {
-    background-color: #e74c3c;
+    background-color: var(--primary-color);
     color: white;
 }
 
 .emergency-call:hover {
-    background-color: #c0392b;
+    background-color: var(--secondary-color);
 }
 
 .emergency-cancel {
-    background-color: #95a5a6;
+    background-color: var(--secondary-color);
     color: white;
 }
 
 .emergency-cancel:hover {
-    background-color: #7f8c8d;
+    background-color: var(--hover-color);
 }
 
 .day-number {
@@ -648,7 +990,7 @@ footer a:hover {
 .event-title {
     font-size: 0.8rem;
     line-height: 1.2;
-    color: #666;
+    color: var(--text-color);
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
